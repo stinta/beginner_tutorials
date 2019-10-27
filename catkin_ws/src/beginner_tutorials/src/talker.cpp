@@ -51,7 +51,7 @@ int main(int argc, char **argv)
    * The first NodeHandle constructed will fully initialize this node, and the last
    * NodeHandle destructed will close down the node.
    */
-  ros::NodeHandle n;
+  auto n = ros::NodeHandle();
 
   /**
    * The advertise() function is how you tell ROS that you want to
@@ -70,22 +70,22 @@ int main(int argc, char **argv)
    * than we can send them, the number here specifies how many messages to
    * buffer up before throwing some away.
    */
-  ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+  auto chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
   ros::Rate loop_rate(10);
 
   /**
    * A count of how many messages we have sent. This is used to create
    * a unique string for each message.
    */
-  int count = 0;
+  auto count = 0;
   while (ros::ok())
   {
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */
-    std_msgs::String msg;
+    auto msg = std_msgs::String();
 
-    std::stringstream ss;
+    auto ss = std::stringstream();
     ss << "FIRST 808X Pub/Sub program from beginner_tutorials " << count;
     msg.data = ss.str();
 
