@@ -24,16 +24,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+#include <sstream>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-
-#include <sstream>
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
  */
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
    * any ROS arguments and name remapping that were provided at the command line.
@@ -54,13 +52,14 @@ int main(int argc, char **argv)
   auto n = ros::NodeHandle();
   std::string customStr = "No custom string provided as an argument";
   if (argc > 1) {
-     customStr = std::string(argv[1]);
-     
-     if (customStr.empty()) {
-       ROS_ERROR_STREAM("Command Argument provided is EMPTY setting to default ");
-       customStr = "EMPTY string provided";
-      }
-   }
+    customStr = std::string(argv[1]);
+
+    if (customStr.empty()) {
+      ROS_ERROR_STREAM("Command Argument provided"
+               "is EMPTY setting to default ");
+      customStr = "EMPTY string provided";
+    }
+  }
   /**
    * The advertise() function is how you tell ROS that you want to
    * publish on a given topic name. This invokes a call to the ROS
@@ -86,8 +85,7 @@ int main(int argc, char **argv)
    * a unique string for each message.
    */
   auto count = 0;
-  while (ros::ok())
-  {
+  while (ros::ok()) {
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */
