@@ -52,7 +52,15 @@ int main(int argc, char **argv)
    * NodeHandle destructed will close down the node.
    */
   auto n = ros::NodeHandle();
-
+  std::string customStr = "No custom string provided as an argument";
+  if (argc > 1) {
+     customStr = std::string(argv[1]);
+     
+     if (customStr.empty()) {
+       ROS_ERROR_STREAM("Command Argument provided is EMPTY setting to default ");
+       customStr = "EMPTY string provided";
+      }
+   }
   /**
    * The advertise() function is how you tell ROS that you want to
    * publish on a given topic name. This invokes a call to the ROS
@@ -86,7 +94,7 @@ int main(int argc, char **argv)
     auto msg = std_msgs::String();
 
     auto ss = std::stringstream();
-    ss << "FIRST 808X Pub/Sub program from beginner_tutorials " << count;
+    ss << customStr << " "<< count;
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());

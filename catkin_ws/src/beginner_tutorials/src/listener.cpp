@@ -54,7 +54,7 @@ int main(int argc, char **argv)
    * The first NodeHandle constructed will fully initialize this node, and the last
    * NodeHandle destructed will close down the node.
    */
-   auto n = ros::NodeHandle();
+   ros::NodeHandle n = ros::NodeHandle();
 
   /**
    * The subscribe() call is how you tell ROS that you want to receive messages
