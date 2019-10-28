@@ -7,7 +7,7 @@ Note that this repo is for the catkin workspace that contains the beginner_tutor
 
 First pub/sub assignment where user can provide a command line String argument which will be read from argv and published but the 'talker' ros node and 'listener' ros node subscribes to the message and echoes it.
 
-Find the pub/sub project files [here] (catkin_ws/src/beginner_tutorials)
+Find the pub/sub project files [here] (./catkin_ws/src/beginner_tutorials)
 
 
 ## Standard install clonning from git
@@ -27,9 +27,9 @@ Open a couple of terminals and for each run
 cd <path to repository>
 source devel/setup.sh
 Terminal1: rosrun beginn_tutorials talker "CUSTOM STRING"
-Terminale: rosrun beginn_tutorials listener
+Terminal2: rosrun beginn_tutorials listener
 ```
-##Code Checks
+## Code Checks
 
 cppcheck
 ```
@@ -40,7 +40,7 @@ cpplint
 ```
  cpplint $(find . -name \*.cpp | grep -vE -e "^./build/" -e "^./results")
 ```
-##Author
+## Author
 Sandra P. Tinta
 
 ## License
