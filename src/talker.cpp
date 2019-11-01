@@ -40,7 +40,7 @@
 #include "beginner_tutorials/updateStr.h"
 
 /* variable global to the program so that callback function has access to it */
-std::string customStr = "No custom string provided as an argument";
+extern std::string customStr = "No custom string provided as an argument";
 
 /**
  * @brief Function implemented as a helper for updating string via a service
@@ -55,9 +55,9 @@ bool updateStr(beginner_tutorials::updateStr::Request &req,
                 beginner_tutorials::updateStr::Response &res) {
   ROS_DEBUG_STREAM("Starting to execute updateStr service method");
   res.lclStr = req.lclStr;
-  customStr= req.lclStr;
+  customStr = req.lclStr;
   ROS_DEBUG_STREAM("Assigned request string to local variable customStr");
-  if (customStr.empty()){
+  if (customStr.empty()) {
     ROS_WARN_STREAM("request string provided was empty");
   }
   return true;
@@ -87,28 +87,27 @@ int main(int argc, char **argv) {
 
   double rate = 10.0;
   std::string::size_type ssz;
-  
   if (argc >= 2) {
     customStr = std::string(argv[1]);
     try {
-      rate = std::stod(argv[2],&ssz);
+      rate = std::stod(argv[2], &ssz);
     }
     catch (const std::invalid_argument& ia) {
-	ROS_FATAL_STREAM("could not convert to float; invalid argument");
-	ROS_INFO_STREAM("setting rate to default value");
-	rate = 0.5;
+      ROS_FATAL_STREAM("could not convert to float; invalid argument");
+      ROS_INFO_STREAM("setting rate to default value");
+      rate = 0.5;
     }
-   }
+  }
 
     if (argc < 1) {
       ROS_WARN_STREAM("Empty Argument provided"
-	       "setting to defaults"
+               "setting to defaults"
                "is EMPTY setting to default ");
       customStr = "EMPTY string provided";
       rate = 1.0;
     }
 
-  ros::ServiceServer service = n.advertiseService("updateStr",updateStr);
+  ros::ServiceServer service = n.advertiseService("updateStr", updateStr);
   ROS_INFO_STREAM("Ready to update string.");
 
   /**
