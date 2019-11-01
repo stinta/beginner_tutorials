@@ -1,0 +1,7 @@
+<launch>
+ <arg name="myArgs" default="None 2.0"/>
+ <node pkg="beginner_tutorials" name="talker" type="talker" launch-prefix="xterm -e" args="$(arg myArgs)">
+ </node>
+ <node pkg="beginner_tutorials" name="listener" type="listener" launch-prefix="xterm -e"/>
+</launch>
+

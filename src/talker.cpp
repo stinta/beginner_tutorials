@@ -51,8 +51,11 @@ int main(int argc, char **argv) {
    */
   auto n = ros::NodeHandle();
   std::string customStr = "No custom string provided as an argument";
+  double rate = 10.0;
+  std::string::size_type ssz;
   if (argc > 1) {
     customStr = std::string(argv[1]);
+    rate = std::stod(argv[2],&ssz);
 
     if (customStr.empty()) {
       ROS_ERROR_STREAM("Command Argument provided"
@@ -78,7 +81,8 @@ int main(int argc, char **argv) {
    * buffer up before throwing some away.
    */
   auto chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
-  ros::Rate loop_rate(10);
+
+  ros::Rate loop_rate(rate);
 
   /**
    * A count of how many messages we have sent. This is used to create
