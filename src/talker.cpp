@@ -24,10 +24,30 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+
+/**
+ * @file talker.cpp
+ * @author Sandra Tinta
+ * @copyright 2019 BSD License
+ *
+ * @brief Publisher and Server Node
+ **/
+
 #include <sstream>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "beginner_tutorials/updateStr.h"
 
+extern std::string customStr = "No custom string provided as an argument";
+
+bool updateStr(beginner_tutorials::updateStr::Request &req,
+                beginner_tutorials::updateStr::Response &res) {
+  res.lclStr = req.lclStr;
+  ROS_INFO_STREAM("request: "<< req.lclStr);
+  ROS_INFO_STREAM("response: "<< res.lclStr);
+  customStr= req.lclStr;
+  return true;
+}
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
  */
@@ -50,7 +70,7 @@ int main(int argc, char **argv) {
    * NodeHandle destructed will close down the node.
    */
   auto n = ros::NodeHandle();
-  std::string customStr = "No custom string provided as an argument";
+
   double rate = 10.0;
   std::string::size_type ssz;
   if (argc > 1) {
@@ -63,6 +83,13 @@ int main(int argc, char **argv) {
       customStr = "EMPTY string provided";
     }
   }
+
+  ros::ServiceServer service = n.advertiseService("updateStr",updateStr);
+  ROS_INFO_STREAM("Ready to update string.");
+
+
+
+
   /**
    * The advertise() function is how you tell ROS that you want to
    * publish on a given topic name. This invokes a call to the ROS
