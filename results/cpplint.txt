@@ -1,2 +1,5 @@
+./src/talker.cpp:54:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::updateStr::Request &req  [runtime/references] [2]
+./src/talker.cpp:55:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::updateStr::Response &res  [runtime/references] [2]
 Done processing ./src/listener.cpp
 Done processing ./src/talker.cpp
+Total errors found: 2
