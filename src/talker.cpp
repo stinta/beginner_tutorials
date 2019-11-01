@@ -34,18 +34,32 @@
  **/
 
 #include <sstream>
+#include <stdexcept>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "beginner_tutorials/updateStr.h"
 
-extern std::string customStr = "No custom string provided as an argument";
+/* variable global to the program so that callback function has access to it */
+std::string customStr = "No custom string provided as an argument";
+
+/**
+ * @brief Function implemented as a helper for updating string via a service
+ * 
+ * @param request is a request for the updateStr service
+ * @param response is a response for the updateStr service
+ * 
+ * @return true
+ */
 
 bool updateStr(beginner_tutorials::updateStr::Request &req,
                 beginner_tutorials::updateStr::Response &res) {
+  ROS_DEBUG_STREAM("Starting to execute updateStr service method");
   res.lclStr = req.lclStr;
-  ROS_INFO_STREAM("request: "<< req.lclStr);
-  ROS_INFO_STREAM("response: "<< res.lclStr);
   customStr= req.lclStr;
+  ROS_DEBUG_STREAM("Assigned request string to local variable customStr");
+  if (customStr.empty()){
+    ROS_WARN_STREAM("request string provided was empty");
+  }
   return true;
 }
 /**
@@ -73,22 +87,29 @@ int main(int argc, char **argv) {
 
   double rate = 10.0;
   std::string::size_type ssz;
-  if (argc > 1) {
+  
+  if (argc >= 2) {
     customStr = std::string(argv[1]);
-    rate = std::stod(argv[2],&ssz);
+    try {
+      rate = std::stod(argv[2],&ssz);
+    }
+    catch (const std::invalid_argument& ia) {
+	ROS_FATAL_STREAM("could not convert to float; invalid argument");
+	ROS_INFO_STREAM("setting rate to default value");
+	rate = 0.5;
+    }
+   }
 
-    if (customStr.empty()) {
-      ROS_ERROR_STREAM("Command Argument provided"
+    if (argc < 1) {
+      ROS_WARN_STREAM("Empty Argument provided"
+	       "setting to defaults"
                "is EMPTY setting to default ");
       customStr = "EMPTY string provided";
+      rate = 1.0;
     }
-  }
 
   ros::ServiceServer service = n.advertiseService("updateStr",updateStr);
   ROS_INFO_STREAM("Ready to update string.");
-
-
-
 
   /**
    * The advertise() function is how you tell ROS that you want to
