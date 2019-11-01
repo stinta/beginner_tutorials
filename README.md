@@ -1,23 +1,23 @@
-# 808X beginner_tutorials
+# 808X Week10 Submission
 ## Overview
-ROS Beginner Tutorials
-Note that this repo is for the catkin workspace that contains the beginner_tutorial 
+The pub/sub assignment where user can provide a command line String argument which will be read from argv and published but the 'talker' ros node and 'listener' ros node subscribes to the message and echoes it.
 
-## Pub/Sub Exercise
+Additionally, a launch file is provided to start both talker and listener nodes with the option of providing arguments to set a custom string displayed and a rate at which the string is set.  If no argument is provided, default values will be used.
 
-First pub/sub assignment where user can provide a command line String argument which will be read from argv and published but the 'talker' ros node and 'listener' ros node subscribes to the message and echoes it.
-
-Find the pub/sub project files [here](./catkin_ws/src/beginner_tutorials)
-
+Lastly, the talker nodes provides a service call /updateStr that enables the user to update the string to be used via the rosservice utility. 
 
 ## Standard install clonning from git
+
+On a catkin workspace src folder:
 ```
 git clone --recursive https://github.com/stinta/beginner_tutorials.git
-cd <path to repository>
+```
+On a catkin workspace
+```
 catkin_make
 ```
 
-## Running and Starting ROS nodes
+## Running and Starting ROS nodes manually
 ```
 cd <path to repository>
 source devel/setup.sh
@@ -28,6 +28,20 @@ cd <path to repository>
 source devel/setup.sh
 Terminal1: rosrun beginn_tutorials talker "CUSTOM STRING"
 Terminal2: rosrun beginn_tutorials listener
+```
+## Running and Starting ROS node via the launch file
+Ensure that the setup.sh script has been sourced
+Note that the arguments to be provided are a string followed by a double.  If no value or invalid values are provided'
+the program will sure default values
+```
+roslaunch beginner_tutorials Week10_HW.launch myArgs:="SENCONDTRY 0.5"
+```
+
+## Updating the string via de service
+While the nodes are running
+```
+rosservice call /updateStr "UPDATED VIA  SERVICE CALL"
+
 ```
 ## Code Checks
 
