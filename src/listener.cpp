@@ -24,14 +24,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+/**
+ * @file listener.cpp
+ * @author Sandra Tinta
+ * @copyright 2019 BSD License
+ *
+ * @brief Subscriber Node
+ **/
+
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-
 /**
  * This tutorial demonstrates simple receipt of messages over the ROS system.
  */
 void chatterCallback(const std_msgs::String::ConstPtr& msg) {
-  ROS_INFO("I heard: [%s]", msg->data.c_str());
+  ROS_INFO_STREAM("I heard: [" <<  msg->data.c_str() <<"]");
 }
 
 int main(int argc, char **argv) {
@@ -77,6 +84,7 @@ int main(int argc, char **argv) {
    * will exit when Ctrl-C is pressed, or the node is shutdown by the master.
    */
   ros::spin();
+  ROS_WARN_STREAM("After ros::spin; program is ending");
 
   return 0;
 }
