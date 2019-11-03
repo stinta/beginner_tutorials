@@ -35,7 +35,7 @@
 
 #include <sstream>
 #include <stdexcept>
-#include <tf/transform_broadcaster.h>
+#include "tf/transform_broadcaster.h"
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "beginner_tutorials/updateStr.h"
@@ -85,7 +85,6 @@ int main(int argc, char **argv) {
    * NodeHandle destructed will close down the node.
    */
   auto n = ros::NodeHandle();
-  
   /**
    * TF variables
    */
@@ -163,17 +162,12 @@ int main(int argc, char **argv) {
      */
     chatter_pub.publish(msg);
 
-    transform.setOrigin( tf::Vector3(0.1,0.2,0.5) );
+    transform.setOrigin(tf::Vector3(0.1, 0.2, 0.5));
     tf::Quaternion q;
     q.setRPY(0.5, 0.5, 0.5);
     transform.setRotation(q);
-    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
-
-    /*br.sendTransform(
-         tf::StampedTransform(
-              tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0.1, 0.0, 0.2)),
-                  ros::Time::now(),"world", "talk"));
- */
+    br.sendTransform(
+         tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
 
     ros::spinOnce();
 
