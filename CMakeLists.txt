@@ -161,4 +161,8 @@ add_dependencies(listener beginner_tutorials_generate_messages_cpp)
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-
+if(CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
+  add_rostest_gtest(allTalkerTests test/allTalkerTests.test test/main.cpp test/testTalker.cpp)
+  target_link_libraries(allTalkerTests ${catkin_LIBRARIES})
+endif()
