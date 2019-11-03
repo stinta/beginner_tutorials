@@ -73,7 +73,12 @@ To replay the bag file
 ```
 rosbag play record.bag
 ```
-
+## Running Test
+Test cases were added to the test folder
+Running the test after compiling the code
+```
+rostest beginner_tutorials allTalkerTests.test 
+```
 
 ## Code Checks
 
